@@ -11,9 +11,9 @@ async function getJobCount() {
 		console.log(error);
 	}
 }
-getJobCount();
 async function createPostCollection() {
 	try {
+		await getJobCount();
 		const res = await firebase
 			.firestore()
 			.collection("jobPosts")
@@ -21,6 +21,7 @@ async function createPostCollection() {
 				job_id: jobCount + 1,
 				job_title: details["job_title"].value,
 				company_name: details["company_name"].value,
+				company_img: details["company_img"].value,
 				role: details["role"].value,
 				job_nature: details["job_nature"].value,
 				batch: details["batch"].value,
@@ -30,7 +31,6 @@ async function createPostCollection() {
 				apply_link: details["apply_link"].value,
 				last_date: details["last_date"].value,
 			});
-		jobCount++;
 		alert("Job Post Created");
 	} catch (error) {
 		console.log(error);
